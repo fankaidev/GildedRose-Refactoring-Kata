@@ -19,9 +19,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit.jupiter.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -49,6 +49,31 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.7.4</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.gildedrose*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.gildedrose*</param>
+                    </targetTests>
+                    <mutators>
+                        <mutator>DEFAULTS</mutator>
+<!--                        <mutator>CONDITIONALS_BOUNDARY</mutator>-->
+<!--                        <mutator>NEGATE_CONDITIONALS</mutator>-->
+<!--                        <mutator>RETURN_VALS</mutator>-->
+<!--                        <mutator>VOID_METHOD_CALLS</mutator>-->
+<!--                        <mutator>EMPTY_RETURNS</mutator>-->
+<!--                        <mutator>FALSE_RETURNS</mutator>-->
+<!--                        <mutator>TRUE_RETURNS</mutator>-->
+<!--                        <mutator>NULL_RETURNS</mutator>-->
+<!--                        <mutator>PRIMITIVE_RETURNS</mutator>-->
+                    </mutators>
+                </configuration>
             </plugin>
         </plugins>
     </build>

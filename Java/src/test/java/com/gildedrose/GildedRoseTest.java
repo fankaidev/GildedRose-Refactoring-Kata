@@ -1,17 +1,17 @@
 package com.gildedrose;
 
 import org.approvaltests.combinations.CombinationApprovals;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class GildedRoseTest {
+public class GildedRoseTest {
 
     @Test
-    void basicTest() {
+    public void basicTest() {
         CombinationApprovals.verifyAllCombinations(this::getGildedRose,
                 new String[]{"foo", "+5 Dexterity Vest", "Aged Brie", "Elixir of the Mongoose", "Conjured Mana Cake",
                              "Sulfuras, Hand of Ragnaros", "Backstage passes to a TAFKAL80ETC concert"},
-                new Integer[]{-1, 0, 2, 3, 5, 10, 15},
-                new Integer[]{0, 5, 7, 20, 49, 80});
+                new Integer[]{-1, 0, 1, 2, 3, 5, 6, 9, 10, 11, 12, 15},
+                new Integer[]{0, 5, 7, 20, 49, 50, 80});
     }
 
     private String getGildedRose(String foo, int sellIn, int quality) {
