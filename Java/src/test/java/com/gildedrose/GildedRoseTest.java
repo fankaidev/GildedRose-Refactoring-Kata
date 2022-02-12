@@ -15,10 +15,10 @@ public class GildedRoseTest {
     }
 
     private String getGildedRose(String foo, int sellIn, int quality) {
-        Item[] items = new Item[] {new Item(foo, sellIn, quality) };
+        Item[] items = new Item[] {Item.createItem(foo, sellIn, quality)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        return app.items[0].toString();
+        return app.items[0].getInfo();
     }
 
 }

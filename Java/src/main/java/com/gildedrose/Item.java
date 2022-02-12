@@ -1,98 +1,39 @@
+/**
+ * @(#)Item.java, 2022/2/12.
+ * <p>
+ * Copyright 2022 yuanfudao.com. All rights reserved.
+ * YUANFUDAO.COM PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
 package com.gildedrose;
 
-public class Item {
+public interface Item {
 
-    public static final String AGED_BRIE = "Aged Brie";
-    public static final String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
-    public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
-    public static final int MAX_QUALITY = 50;
-    public static final int SELLIN_THRESHOLD1 = 11;
-    public static final int SELLIN_THRESHOLD2 = 6;
+    String AGED_BRIE = "Aged Brie";
+    String BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+    String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    int MAX_QUALITY = 50;
 
-    private final String name;
+    String getName();
 
-    private int sellIn;
+    int getSellIn();
 
-    private int quality;
+    int getQuality();
 
-    public Item(String name, int sellIn, int quality) {
-        this.name = name;
-        this.sellIn = sellIn;
-        this.quality = quality;
-    }
+    default String getInfo() {
+         return getName() + ", " + getSellIn() + ", " + getQuality();
+     }
 
-   @Override
-   public String toString() {
-        return this.name + ", " + this.sellIn + ", " + this.quality;
-    }
-
-    void updateQuality() {
-        updateQualityBeforeUpdateSellin();
-
-        updateSellin();
-
-        updateQualityAfterUpdateSellin();
-    }
-
-    private void updateSellin() {
-        if (!isSulfuras()) {
-            sellIn = sellIn - 1;
-        }
-    }
-
-    private void updateQualityAfterUpdateSellin() {
-        if (sellIn < 0) {
-            if (isAgedBrie()) {
-                incrQuality();
-            } else if (isBackstage()) {
-                quality = 0;
-            } else {
-                descQuality();
-            }
-        }
-    }
-
-    private void descQuality() {
-        if (quality > 0) {
-            if (!isSulfuras()) {
-                quality = quality - 1;
-            }
-        }
-    }
-
-    private void updateQualityBeforeUpdateSellin() {
-        if (isAgedBrie() || isBackstage()) {
-            incrQuality();
-
-            if (isBackstage()) {
-                if (sellIn < SELLIN_THRESHOLD1) {
-                    incrQuality();
-                }
-
-                if (sellIn < SELLIN_THRESHOLD2) {
-                    incrQuality();
-                }
-            }
+    static Item createItem(String name, int sellIn, int quality) {
+        if (name.equals(SULFURAS)) {
+            return SulfurasItem.createItem(sellIn, quality);
+        } else if (name.equals(BACKSTAGE)) {
+            return BackstageItem.createItem(sellIn, quality);
+        } else if (name.equals(AGED_BRIE)) {
+            return AgedBrieItem.createItem(sellIn, quality);
         } else {
-            descQuality();
+            return NormalItem.createItem(name, sellIn, quality);
         }
     }
 
-    private void incrQuality() {
-        if (quality < MAX_QUALITY) {
-            quality = quality + 1;
-        }
-    }
-
-    private boolean isSulfuras() {
-        return name.equals(SULFURAS);
-    }
-
-    private boolean isBackstage() {
-        return name.equals(BACKSTAGE);
-    }
-
-    private boolean isAgedBrie() {
-        return name.equals(AGED_BRIE);
-    }
+    void updateQuality();
 }
